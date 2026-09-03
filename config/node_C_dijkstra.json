@@ -1,0 +1,19 @@
+{
+  "node_id": "C",
+  "listen": {"host": "127.0.0.1", "port": 5002},
+  "mode": "dijkstra",
+  "neighbors": [
+    {"node_id": "A", "host": "127.0.0.1", "port": 5000, "cost": 1},
+    {"node_id": "B", "host": "127.0.0.1", "port": 5001, "cost": 2}
+  ],
+  "params": {
+    "initial_ttl": 10,
+    "hello_interval_sec": 5,
+    "hello_timeout_sec": 3,
+    "hello_max_failures": 3,
+    "dedup_cache_ttl_sec": 60,
+    "log_level": "INFO"
+  },
+  "topology_file": "topology.json"
+}
+

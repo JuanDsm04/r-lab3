@@ -1,0 +1,18 @@
+{
+  "node_id": "A",
+  "listen": {"host": "127.0.0.1", "port": 5000},
+  "mode": "flooding",
+  "neighbors": [
+    {"node_id": "B", "host": "127.0.0.1", "port": 5001, "cost": 4},
+    {"node_id": "C", "host": "127.0.0.1", "port": 5002, "cost": 1}
+  ],
+  "params": {
+    "initial_ttl": 10,
+    "hello_interval_sec": 5,
+    "hello_timeout_sec": 3,
+    "hello_max_failures": 3,
+    "dedup_cache_ttl_sec": 60,
+    "log_level": "INFO"
+  }
+}
+
