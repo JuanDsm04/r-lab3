@@ -85,8 +85,19 @@ def test_nodes_connect_after_out_of_order_start_and_exchange_message(tmp_path):
         node_a.start(interactive=False)
         node_b.start(interactive=False)
 
+        # La conexión TCP puede quedar lista unas milésimas antes de que el
+        # primer hello/echo recupere a un vecino que acumuló fallos mientras
+        # el otro proceso aún no escuchaba. Esperamos ambos niveles: transporte
+        # conectado y health-check confirmado.
         assert _wait_for(
-            lambda: "B" in node_a.connections and "A" in node_b.connections
+            lambda: (
+                "B" in node_a.connections
+                and "A" in node_b.connections
+                and node_a.neighbors["B"].is_up
+                and node_b.neighbors["A"].is_up
+                and node_a.neighbors["B"].last_rtt_sec >= 0
+                and node_b.neighbors["A"].last_rtt_sec >= 0
+            )
         )
         node_a.forwarding.send_user_message("B", "hola por TCP")
 
@@ -125,4 +136,3 @@ def test_invalid_ndjson_line_does_not_close_incoming_connection(tmp_path):
         assert received == ["línea válida"]
     finally:
         node.stop()
-
